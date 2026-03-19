@@ -97,6 +97,48 @@ canvas:active {
     margin: 3% 0;
 }
 
+.player_name {
+    flex-wrap: wrap;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.player_name p {
+    margin: 3% 1%;
+    padding: 1% 2%;
+    border-radius: 21px;
+}
+
+#joueur1 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-blue);
+    color: var(--olympic-blue);
+}
+
+#joueur2 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-yellow);
+    color: var(--olympic-yellow);
+}
+
+#joueur3 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-black);
+    color: var(--olympic-black);
+}
+
+#joueur4 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-green);
+    color: var(--olympic-green);
+}
+
+#joueur5 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-red);
+    color: var(--olympic-red);
+}
+
 .form_Container_Joueur input {
     padding: 5% 5%;
     width: 100%;

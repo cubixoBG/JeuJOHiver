@@ -18,13 +18,13 @@
                     <p>Collectez les 5 anneaux olympiques pour gagner</p>
                 </div>
                 <form class="form_Container_Joueur">
-                    <p>Joueur 1 sur 2</p>
-                    <div class="player_name">
-                        <p>Joueur 1</p>
-                        <p>Joueur 2</p>
-                        <p>Joueur 3</p>
-                        <p>Joueur 4</p>
-                        <p>Joueur 5</p>
+                    <p>Joueur 1 sur 5</p>
+                    <div class="player_name flexCenter">
+                        <p id="joueur1">Joueur 1</p>
+                        <p id="joueur2">Joueur 2</p>
+                        <p id="joueur3">Joueur 3</p>
+                        <p id="joueur4">Joueur 4</p>
+                        <p id="joueur5">Joueur 5</p>
                     </div>
                     <input type="text" placeholder="Nom du Joueur">
                     <button>Suivant →</button>
