@@ -1,6 +1,5 @@
-// env.js
 const ENV = {
-    MISTRAL_API_KEY: "TA_CLE_API_ICI",
+    MISTRAL_API_KEY: "Clé api",
     MISTRAL_URL: "https://api.mistral.ai/v1/chat/completions",
     MODEL: "mistral-tiny",
     
@@ -37,11 +36,18 @@ const ENV = {
         }
     ],
 
-    PROMPT_TEMPLATE: `Tu es un expert des JO d'Hiver. Génère une question de quiz. 
-    Thématique : \${theme}. 
-    Sujets précis : \${subthemes}. 
-    Difficulté : \${difficulty}.
-    Format JSON strict : {"question": "...", "options": ["...", "...", "...", "..."], "answer": 0}`
+    PROMPT_TEMPLATE: `Tu es un expert des jeux Olympiques d'Hiver. Génère UNE SEULE question précise.
+    Thématique : \${theme}.
+    Sujets : \${subthemes}.
+    
+    CONSIGNES STRICTES :
+    1. NE POSE QU'UNE SEULE QUESTION (pas de double question).
+    2. Choisis une difficulté au hasard parmi [Facile, Intermédiaire, Difficile]. 
+    - Si Facile : Question de culture générale (dates, drapeaux).
+    - Si Difficile : Question technique ou anecdote peu connue.
+    3. Les options doivent être courtes (max 5 mots).
+    4. Réponds EXCLUSIVEMENT en JSON :
+    {"question": "...", "options": ["...", "...", "...", "..."], "answer": 0, "difficulty": "..."}`
 };
 
 window._env_ = ENV;
