@@ -18,6 +18,8 @@
                     <h1>OLYMPIA QUIZZ</h1>
                     <p>Collectez les 5 anneaux olympiques pour gagner</p>
                 </div>
+                <script src="../api/env.js"></script>
+                <script src="../api/script.js"></script>
                 <div class="form_Container_Save">
                     <button>
                         <p>▶ Reprendre la partie sauvegardée</p>
@@ -36,6 +38,7 @@
                             <canvas id="j5" width="90" height="90"></canvas>
                         </div>
                     </form>
+                    <button id="btn-valid-nb" style="display:none;" onclick="validerNombreJoueurs()">Suivant →</button>
                 </div>
             </div>
         </section>

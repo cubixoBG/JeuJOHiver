@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 
 <head>
@@ -7,7 +8,8 @@
     <title>JO Winter - Joueurs</title>
     <link rel="stylesheet" href="styles/general.css">
     <link rel="stylesheet" href="styles/forms.css">
-    <link rel="icon" href="images/favicon.ico" />
+    <script src="../api/env.js"></script>
+    <script src="../api/script.js"></script>
 </head>
 
 <body>
@@ -18,22 +20,61 @@
                     <h1>OLYMPIA QUIZZ</h1>
                     <p>Collectez les 5 anneaux olympiques pour gagner</p>
                 </div>
-                <form class="form_Container_Joueur">
-                    <p>Joueur 1 sur 5</p>
+                <form class="form_Container_Joueur" onsubmit="return false;">
+                    <p id="step-label">Joueur 1 sur 5</p>
                     <div class="player_name flexCenter">
-                        <p id="joueur1">Joueur 1</p>
-                        <p id="joueur2">Joueur 2</p>
-                        <p id="joueur3">Joueur 3</p>
-                        <p id="joueur4">Joueur 4</p>
-                        <p id="joueur5">Joueur 5</p>
+                        <p id="joueur1" style="display:none;"></p>
+                        <p id="joueur2" style="display:none;"></p>
+                        <p id="joueur3" style="display:none;"></p>
+                        <p id="joueur4" style="display:none;"></p>
+                        <p id="joueur5" style="display:none;"></p>
                     </div>
-                    <input type="text" placeholder="Nom du Joueur">
-                    <button>Suivant →</button>
-                    <button>🥇 Commencer la partie</button>
+                    <input type="text" id="name-input" placeholder="Nom du Joueur">
+                    <button id="next-btn">Suivant →</button>
+                    <button id="start-btn" style="display:none;">🥇 Commencer la partie</button>
                 </form>
             </div>
         </section>
     </main>
+
+    <script>
+        const nbTotal = parseInt(localStorage.getItem('temp_nb_joueurs')) || 1;
+        const pseudos = [];
+        const label = document.getElementById('step-label');
+        const input = document.getElementById('name-input');
+        const nextBtn = document.getElementById('next-btn');
+        const startBtn = document.getElementById('start-btn');
+
+        label.innerText = `Joueur 1 sur ${nbTotal}`;
+
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById(`joueur${i}`).style.display = i <= nbTotal ? 'block' : 'none';
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const val = input.value.trim();
+            if (val === "") return;
+
+            pseudos.push(val);
+            document.getElementById(`joueur${pseudos.length}`).innerText = val;
+
+            if (pseudos.length < nbTotal) {
+                label.innerText = `Joueur ${pseudos.length + 1} sur ${nbTotal}`;
+                input.value = "";
+            } else {
+                label.innerText = "Tous les joueurs sont prêts !";
+                input.style.display = "none";
+                nextBtn.style.display = "none";
+                startBtn.style.display = "block";
+            }
+        });
+
+        startBtn.addEventListener('click', () => {
+            initialiserJoueurs(pseudos);
+            genererPlateau(30);
+            window.location.href = "jeu.php";
+        });
+    </script>
 </body>
 
 </html>

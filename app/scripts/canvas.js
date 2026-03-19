@@ -38,8 +38,12 @@ function draw(ring, isSelected) {
 function select(ring) {
     selected = ring.n;
     rings.forEach(r => draw(r, r.n === selected));
-    document.getElementById('result').innerHTML =
-        `<strong>${selected} joueur${selected > 1 ? 's' : ''}</strong> sélectionné${selected > 1 ? 's' : ''}`;
+    
+    localStorage.setItem('temp_nb_joueurs', selected);
+    
+    setTimeout(() => {
+        window.location.href = "joueurs.php";
+    }, 300);
 }
 
 rings.forEach(ring => {
