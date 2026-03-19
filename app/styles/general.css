@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  --olympic-blue:   #0085C7;
+  --olympic-black:  #000000;
+  --olympic-red:    #DF0024;
+  --olympic-yellow: #F4A900;
+  --olympic-green:  #009F6B;
+}
+
+@font-face {
+  font-family: 'MilanoCortina';
+  src: url('fonts/MilanoCortina2026-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'MilanoCortina';
+  src: url('fonts/MilanoCortina2026-BdIt.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
+
+:root {
+  /* Titres — typo officielle italique & dynamique */
+  --font-display: 'MilanoCortina', 'Futura', sans-serif;
+
+  /* Corps de texte — sobre, lisible */
+  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+
+  /* Graisses */
+  --fw-light: 300;
+  --fw-regular: 500;
+  --fw-bold: 800;
+}
+
+H1, H2, H3, H4, H5, H6 {
+    font-family: var(--font-display);
+}
+
+h1 {
+    font-weight: var(--fw-bold);
+}
+
+p, span {
+    font-family: var(--font-body);
+}
+
+.flexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    background: linear-gradient(135deg, rgb(26, 29, 35) 0%, rgb(16, 19, 24) 100%);
+}

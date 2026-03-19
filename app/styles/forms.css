@@ -1,0 +1,90 @@
+.form {
+    width: 100%;
+    height: 100vh;
+}
+
+.form_Container {
+    background: white;
+    padding: 3% 3%;
+    border-radius: 21px;
+    text-align: center;
+    min-width: 25%;
+    max-width: 40%;
+}
+
+.form_Container_Header {
+    margin: 0 0 4% 0;
+}
+
+.form_Container_Header p {
+    margin: 5% 0;
+    color: rgb(136, 136, 136);
+}
+
+.form_Container_Save {
+    margin: 9% 0;
+}
+
+.form_Container_Save button {
+    padding: 4% 0;
+    border: solid 3px var(--olympic-blue);
+    background-color: white;
+    border-radius: 12px;
+    color: var(--olympic-blue);
+    font-weight: var(--fw-bold);
+    width: 100%;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.form_Container_Save button:hover {
+    border: solid 3px var(--olympic-yellow);
+    color: var(--olympic-yellow);
+    transition: all 0.3s;
+}
+
+.form_Container_Choix span {
+    color: rgb(51, 51, 51);
+    font-weight: var(--fw-regular);
+}
+
+.rings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 2rem 0 0 0;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+canvas {
+    cursor: pointer;
+    display: block;
+    border-radius: 50%;
+    transition: transform .12s ease;
+}
+
+canvas:hover {
+    transform: scale(1.08);
+}
+
+canvas:active {
+    transform: scale(0.95);
+}
+
+#result {
+    margin-top: 1.5rem;
+    font-size: 15px;
+    text-align: center;
+    min-height: 24px;
+}
+
+#result strong {
+    color: #111;
+    font-weight: 500;
+}
