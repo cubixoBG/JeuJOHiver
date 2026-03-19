@@ -1,0 +1,172 @@
+.form {
+    width: 100%;
+    height: 100vh;
+}
+
+.form_Container {
+    background: white;
+    padding: 3% 3%;
+    border-radius: 21px;
+    text-align: center;
+    min-width: 25%;
+    max-width: 40%;
+}
+
+.form_Container_Header {
+    margin: 0 0 4% 0;
+}
+
+.form_Container_Header p {
+    margin: 5% 0;
+    color: rgb(136, 136, 136);
+}
+
+/* Page index */
+
+.form_Container_Save {
+    margin: 9% 0;
+}
+
+.form_Container_Save button {
+    padding: 4% 0;
+    border: solid 3px var(--olympic-blue);
+    background-color: white;
+    border-radius: 12px;
+    color: var(--olympic-blue);
+    font-weight: var(--fw-bold);
+    width: 100%;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.form_Container_Save button:hover {
+    border: solid 3px var(--olympic-yellow);
+    color: var(--olympic-yellow);
+    transition: all 0.3s;
+}
+
+.form_Container_Choix span {
+    color: rgb(51, 51, 51);
+    font-weight: var(--fw-regular);
+}
+
+.rings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 2rem 0 0 0;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+canvas {
+    cursor: pointer;
+    display: block;
+    border-radius: 50%;
+    transition: transform .12s ease;
+}
+
+canvas:hover {
+    transform: scale(1.08);
+}
+
+canvas:active {
+    transform: scale(0.95);
+}
+
+#result {
+    margin-top: 1.5rem;
+    font-size: 15px;
+    text-align: center;
+    min-height: 24px;
+}
+
+#result strong {
+    color: #111;
+    font-weight: 500;
+}
+
+/* Page Joueurs */
+
+.form_Container_Joueur p {
+    margin: 3% 0;
+}
+
+.player_name {
+    flex-wrap: wrap;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.player_name p {
+    margin: 3% 1%;
+    padding: 1% 2%;
+    border-radius: 21px;
+}
+
+#joueur1 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-blue);
+    color: var(--olympic-blue);
+}
+
+#joueur2 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-yellow);
+    color: var(--olympic-yellow);
+}
+
+#joueur3 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-black);
+    color: var(--olympic-black);
+}
+
+#joueur4 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-green);
+    color: var(--olympic-green);
+}
+
+#joueur5 {
+    background-color:rgba(0, 0, 0, 0.04);
+    border: solid 3px var(--olympic-red);
+    color: var(--olympic-red);
+}
+
+.form_Container_Joueur input {
+    padding: 5% 5%;
+    width: 100%;
+    border: solid 3px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-size: 1.1em;
+}
+
+.form_Container_Joueur input:hover {
+    border: solid 3px var(--olympic-blue);
+}
+
+.form_Container_Joueur input:focus {
+    outline: var(--olympic-blue);
+}
+
+input:not(:placeholder-shown) {
+  border-color: var(--olympic-blue);
+}
+
+.form_Container_Joueur button {
+    width: 100%;
+    margin: 3% 0 0 0;
+    background-color: var(--olympic-blue);
+    color: white;
+    padding: 5% 0;
+    font-size: 1em;
+    font-weight: var(--fw-regular);
+    border: none;
+    border-radius: 12px;
+}
