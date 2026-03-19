@@ -7,6 +7,7 @@
     <title>JO Winter - Joueurs</title>
     <link rel="stylesheet" href="styles/general.css">
     <link rel="stylesheet" href="styles/forms.css">
+    <link rel="icon" href="images/favicon.ico" />
 </head>
 
 <body>
