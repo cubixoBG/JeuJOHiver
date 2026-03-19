@@ -45,7 +45,7 @@ h1 {
     font-weight: var(--fw-bold);
 }
 
-p, span {
+p, span, input , button {
     font-family: var(--font-body);
 }
 

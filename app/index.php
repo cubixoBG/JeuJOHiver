@@ -24,7 +24,7 @@
                 </div>
                 <div class="form_Container_Choix">
                     <span>Combiens de joueurs ?</span>
-                    <div class="rings">
+                    <form class="rings">
                         <div class="row">
                             <canvas id="j1" width="90" height="90"></canvas>
                             <canvas id="j2" width="90" height="90"></canvas>
@@ -34,11 +34,12 @@
                             <canvas id="j4" width="90" height="90"></canvas>
                             <canvas id="j5" width="90" height="90"></canvas>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
     </main>
 </body>
 <script src="scripts/canvas.js"></script>
+
 </html>
