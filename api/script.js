@@ -3,6 +3,7 @@ let gameState = {
     indexJoueurActif: 0, 
     plateau: [], 
     difficulteActuelle: "Moyen",
+    questionsPosees: [], // Historique pour éviter les doublons
     derniereMiseAJour: new Date().toISOString()
 };
 
@@ -16,19 +17,17 @@ function initialiserJoueurs(noms) {
         score: 0,
         anneaux: [false, false, false, false, false] 
     }));
+    gameState.questionsPosees = [];
     sauvegarderPartie();
 }
 
-function lancerDe() 
-{
-    const de1 = Math.floor(Math.random() * 6) + 1;
-    console.log("Le joueur a lancé le dé et a obtenu : " + de1);
-    
-    return de1;
+function lancerDe() {
+    return Math.floor(Math.random() * 6) + 1;
 }
 
 function genererPlateau(nombreDeCases) {
     const categories = window._env_.CATEGORIES;
+    plateauLogique = [];
     for (let i = 0; i < nombreDeCases; i++) {
         const catAleatoire = categories[Math.floor(Math.random() * categories.length)];
         plateauLogique.push({
@@ -43,36 +42,17 @@ function genererPlateau(nombreDeCases) {
 }
 
 function verifierVictoire(joueur) {
-    const aGagne = joueur.anneaux.every(statut => statut === true);
-    
-    if (aGagne) {
-        console.log("BRAVO ! Tous les anneaux collectés !");
-    }
-    return aGagne;
-}
-
-function attribuerAnneau(joueur, categorieId) {
-    if (!joueur.anneaux[categorieId]) {
-        joueur.anneaux[categorieId] = true;
-        
-        sauvegarderLocalement(joueur);
-        return true;
-    }
-    return false; 
+    return joueur.anneaux.every(statut => statut === true);
 }
 
 function enregistrerVictoireCase(categorieId) {
     let joueur = gameState.joueurs[gameState.indexJoueurActif];
-    
     joueur.score += 10;
-    if (!joueur.anneaux[categorieId]) {
-        joueur.anneaux[categorieId] = true;
-        console.log(`Anneau catégorie ${categorieId} obtenu !`);
+    const catIdx = parseInt(categorieId);
+    if (joueur.anneaux[catIdx] !== undefined) {
+        joueur.anneaux[catIdx] = true;
     }
     sauvegarderPartie();
-    if (joueur.anneaux.every(a => a === true)) {
-        console.log("VICTOIRE TOTALE : Les 5 anneaux sont là.");
-    }
 }
 
 function passerAuJoueurSuivant() {
@@ -80,95 +60,95 @@ function passerAuJoueurSuivant() {
     sauvegarderPartie();
 }
 
-function sauvegarderLocalement(joueur) {
-    const dataString = JSON.stringify(gameState);
-    
-    localStorage.setItem('olympique_game_data', dataString);
-    
-    console.log("Jeu sauvegardé dans le localStorage !");
-}
-
 function sauvegarderPartie() {
-    const dataString = JSON.stringify(gameState);
-    
-    localStorage.setItem('olympique_game_data', dataString);
-    
-    console.log("Jeu sauvegardé dans le localStorage !");
+    gameState.derniereMiseAJour = new Date().toISOString();
+    localStorage.setItem('olympique_game_data', JSON.stringify(gameState));
 }
 
 function chargerPartie() {
     const savedData = localStorage.getItem('olympique_game_data');
-    
     if (savedData) {
-
         gameState = JSON.parse(savedData);
+        if (!gameState.questionsPosees) gameState.questionsPosees = [];
         const savedPlateau = localStorage.getItem('jo_plateau');
         if(savedPlateau) plateauLogique = JSON.parse(savedPlateau);
-        
-        console.log("Partie récupérée :", gameState);
         return true;
     }
-    
-    console.log("Aucune sauvegarde trouvée, nouvelle partie.");
     return false;
 }
 
-function configurerPseudos() {
-    const nb = document.getElementById('nb-joueurs').value;
-    const container = document.getElementById('pseudo-inputs');
-    container.innerHTML = "<h3>Entrez les pseudos :</h3>";
-
-    const count = Math.max(1, Math.min(5, nb));
-
-    for (let i = 1; i <= count; i++) {
-        container.innerHTML += `
-            <div style="margin: 10px;">
-                Joueur ${i} : <input type="text" class="input-pseudo" placeholder="Pseudo..." value="Joueur ${i}">
-            </div>
-        `;
+function clicReprendrePartie() {
+    if (chargerPartie()) {
+        window.location.href = "jeu.php";
     }
-
-    document.getElementById('step-1').style.display = 'none';
-    document.getElementById('step-2').style.display = 'block';
 }
 
+async function fetchQuestion(indexCase) {
+    const config = window._env_;
+    const caseActuelle = plateauLogique[indexCase % plateauLogique.length];
+    const catInfo = config.CATEGORIES.find(c => c.id === caseActuelle.categorieId);
 
-function demarrerLeJeu() {
-    const inputs = document.querySelectorAll('.input-pseudo');
-    const pseudos = [];
+    // On récupère les dernières questions pour l'exclusion (évite les doublons)
+    const exclus = (gameState.questionsPosees || []).slice(-10).join(", ");
 
-    inputs.forEach(input => {
-        if (input.value.trim() !== "") {
-            pseudos.push(input.value.trim());
-        }
-    });
+    const promptHiver = `Expert JO d'HIVER uniquement. 
+    Thème: ${catInfo.nom} (${catInfo.sujets.join(", ")}). 
+    Difficulté demandée: ${gameState.difficulteActuelle}.
+    INTERDIT de poser ces questions: [${exclus}].
+    JSON: {"question": "...", "options": ["", "", "", ""], "answer": 0, "difficulty": "${gameState.difficulteActuelle}"}`;
 
-    initialiserJoueurs(pseudos);
-    genererPlateau(30);
+    try {
+        const response = await fetch(config.MISTRAL_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${config.MISTRAL_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: config.MODEL,
+                messages: [
+                    { role: "system", content: "Tu es un expert en JO d'HIVER. Tu réponds en JSON court. Tu inclus toujours le champ 'difficulty' dans ton JSON." },
+                    { role: "user", content: promptHiver }
+                ],
+                temperature: 0.6,
+                response_format: { type: "json_object" }
+            })
+        });
 
-    document.getElementById('setup-menu').style.display = 'none';
-    document.getElementById('game-container').style.display = 'block';
+        const data = await response.json();
+        const res = JSON.parse(data.choices[0].message.content);
 
-    if (typeof updateUI === "function") updateUI();
-    if (typeof dessinerPlateau === "function") dessinerPlateau();
+
+        res.options = res.options.map(o => (typeof o === 'object' ? Object.values(o)[0] : String(o)));
+        
+        res.difficulty = res.difficulty || gameState.difficulteActuelle;
+
+        if (!gameState.questionsPosees) gameState.questionsPosees = [];
+        gameState.questionsPosees.push(res.question);
+        sauvegarderPartie();
+
+        res.themeNom = catInfo.nom;
+        res.themeCouleur = catInfo.couleur;
+        
+        return res;
+
+    } catch (e) {
+        console.error("Erreur:", e);
+        return null;
+    }
 }
 
 window.onload = () => {
-
-    if (chargerPartie()) {
-        console.log("Une sauvegarde a été trouvée. Reprise de la partie...");
-        
-
-        document.getElementById('setup-menu').style.display = 'none';
-        document.getElementById('game-container').style.display = 'block';
-        
-
+    const btnReprendre = document.querySelector('.form_Container_Save button');
+    if (btnReprendre) {
+        if (!localStorage.getItem('olympique_game_data')) {
+            btnReprendre.style.display = 'none';
+        } else {
+            btnReprendre.onclick = (e) => { e.preventDefault(); clicReprendrePartie(); };
+        }
+    }
+    if (window.location.pathname.includes("jeu.php")) {
+        chargerPartie();
         if (typeof updateUI === "function") updateUI();
-        if (typeof dessinerPlateau === "function") dessinerPlateau();
-    } else {
-        console.log("Aucune sauvegarde. Affichage du menu de configuration.");
-
-        document.getElementById('setup-menu').style.display = 'block';
-        document.getElementById('game-container').style.display = 'none';
     }
 };

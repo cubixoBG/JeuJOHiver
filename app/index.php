@@ -21,7 +21,7 @@
                 <script src="../api/env.js"></script>
                 <script src="../api/script.js"></script>
                 <div class="form_Container_Save">
-                    <button>
+                    <button type="button">
                         <p>▶ Reprendre la partie sauvegardée</p>
                     </button>
                 </div>
@@ -42,6 +42,9 @@
                 </div>
             </div>
         </section>
+
+        <section id="game-container" style="display:none;">
+            </section>
     </main>
 </body>
 <script src="scripts/canvas.js"></script>
