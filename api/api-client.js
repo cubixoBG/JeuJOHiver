@@ -1,13 +1,15 @@
 async function fetchQuestion(indexCase) {
     const config = window._env_;
-    const caseActuelle = plateauLogique[indexCase % plateauLogique.length]; // Sécurité modulo
-    
+    const categories = config.CATEGORIES;
+
+    const catAleatoire = categories[Math.floor(Math.random() * categories.length)];
+
     const niveaux = ["Facile", "Intermédiaire", "Difficile"];
     const niveauForce = niveaux[Math.floor(Math.random() * niveaux.length)];
 
     const promptMessage = config.PROMPT_TEMPLATE
-        .replace('${theme}', caseActuelle.nom)
-        .replace('${subthemes}', caseActuelle.sujets)
+        .replace('${theme}', catAleatoire.nom)
+        .replace('${subthemes}', catAleatoire.sujets.join(", "))
         .replace('${difficulty}', niveauForce);
 
     try {
@@ -31,24 +33,21 @@ async function fetchQuestion(indexCase) {
         if (rawContent.options) {
             rawContent.options = rawContent.options.map(opt => {
                 let texte = (typeof opt === 'object' && opt !== null) ? Object.values(opt)[0] : opt;
-                if (typeof texte === 'string') {
-                    return texte.replaceAll('*', '').trim();
-                }
+                if (typeof texte === 'string') return texte.replaceAll('*', '').trim();
                 return texte;
             });
         }
-
 
         if (rawContent.question) {
             rawContent.question = rawContent.question.replaceAll('*', '').trim();
         }
 
-        rawContent.themeNom = caseActuelle.nom;
-        rawContent.themeCouleur = window._env_.CATEGORIES[caseActuelle.categorieId].couleur;
+        rawContent.themeNom     = catAleatoire.nom;
+        rawContent.themeCouleur = catAleatoire.couleur;
 
-        return rawContent; 
+        return rawContent;
     } catch (error) {
         console.error("Erreur API:", error);
-        return null; 
+        return null;
     }
 }
