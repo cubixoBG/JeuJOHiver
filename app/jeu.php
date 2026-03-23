@@ -6,49 +6,6 @@
   <title>Olympia Quizz</title>
   <link rel="stylesheet" href="styles/general.css">
   <link rel="stylesheet" href="styles/plateau.css">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      display: flex;
-      flex-direction: row;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      background: #f0f2f5;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    #sidebar {
-      width: 220px;
-      min-width: 220px;
-      height: 100vh;
-      background: #fff;
-      border-right: 1px solid #e5e7eb;
-      display: flex;
-      flex-direction: column;
-      padding: 16px 12px;
-      gap: 12px;
-      overflow-y: auto;
-      flex-shrink: 0;
-    }
-
-    #board-wrap {
-      flex: 1;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-      overflow: hidden;
-    }
-
-    #board-wrap canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
 </head>
 <body>
 
